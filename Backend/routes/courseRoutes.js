@@ -5,6 +5,7 @@ import {
     getCourses,
     getCourseById,
     updateCourse,
+    deleteCourse,
 } from "../controllers/courseController.js";
 
 import { protect } from "../middleware/authMiddleware.js";
@@ -29,5 +30,11 @@ router.patch(
     allowRoles("instructor"),
     updateCourse
 );
+
+router.delete("/:id", 
+    protect,
+    allowRoles("instructor"),
+    deleteCourse
+)
 
 export default router;

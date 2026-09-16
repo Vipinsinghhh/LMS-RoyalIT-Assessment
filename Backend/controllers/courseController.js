@@ -1,4 +1,5 @@
 import Course from "../models/Course.js";
+import Enrollment from "../models/Enrollment.js";
 
 export const createCourse = async (req, res) => {
   try {
@@ -184,6 +185,47 @@ export const updateCourse = async (req, res) => {
       success: true,
       message: "Course updated successfully",
       data: course,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
+
+export const deleteCourse = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
+
+    // Only course creator can delete
+    if (course.instructor.toString() !== req.user.userId) {
+      return res.status(403).json({
+        success: false,
+        message: "You can only delete your own courses",
+      });
+    }
+
+    // Remove related enrollments
+    await Enrollment.deleteMany({
+      course: course._id,
+    });
+
+    await Course.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "Course deleted successfully",
     });
   } catch (error) {
     console.error(error);
