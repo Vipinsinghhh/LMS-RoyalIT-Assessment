@@ -70,3 +70,49 @@ export const createCourse = async (req, res) => {
     });
   }
 };
+
+
+export const getCourses = async (req, res) => {
+  try {
+    const courses = await Course.find()
+      .populate("instructor", "name email")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      data: courses,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
+
+export const getCourseById = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id)
+      .populate("instructor", "name email");
+
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: course,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Invalid course ID",
+    });
+  }
+};
