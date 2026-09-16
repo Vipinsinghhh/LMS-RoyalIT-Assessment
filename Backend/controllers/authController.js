@@ -118,3 +118,14 @@ export const login = async (req, res) => {
     });
   }
 };
+
+export const getMe = async (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Authenticated user",
+    data: {
+      userId: req.user.userId,
+      role: req.user.role,
+    },
+  });
+};
