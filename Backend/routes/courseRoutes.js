@@ -4,6 +4,7 @@ import {
     createCourse,
     getCourses,
     getCourseById,
+    updateCourse,
 } from "../controllers/courseController.js";
 
 import { protect } from "../middleware/authMiddleware.js";
@@ -20,6 +21,13 @@ router.post(
 
 router.get("/", getCourses);
 
-router.get("/:id",getCourseById)
+router.get("/:id", getCourseById);
+
+router.patch(
+    "/:id",
+    protect,
+    allowRoles("instructor"),
+    updateCourse
+);
 
 export default router;
