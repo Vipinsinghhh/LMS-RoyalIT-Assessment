@@ -420,5 +420,5 @@ Possible production-level improvements include:
 
 # Documentation
 
-- [API Documentation](Backend/docs/Api.md)
-- [Database Schema](Backend/docs/DATABASE_SCHEMA.md)
+- [API Documentation](https://github.com/Vipinsinghhh/LMS-RoyalIT-Assessment/blob/main/Backend/docs/API.md)
+- [Database Schema](https://github.com/Vipinsinghhh/LMS-RoyalIT-Assessment/blob/main/Backend/docs/DATABASE_SCHEMA.md)
